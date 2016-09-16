@@ -1,0 +1,3 @@
+api:
+    resource: "@ApiBundle/Controller/DefaultController.php"
+    type:     annotation

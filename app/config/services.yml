@@ -1,0 +1,2 @@
+imports:
+  - { resource: ../../src/ApiBundle/Resources/config/services.yml }
