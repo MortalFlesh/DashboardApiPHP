@@ -2,6 +2,7 @@
 
 namespace MF\Dashboard\ApiBundle\Controller;
 
+use MF\Collection\Mutable\Generic\ListCollection;
 use MF\Dashboard\ApiBundle\Entity\Item;
 use MF\Dashboard\ApiBundle\Entity\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -11,7 +12,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @Route("/template/{templateId}/item")
+ * @Route("/template/{id}/item")
  */
 class TemplateItemController extends Controller
 {
@@ -25,6 +26,7 @@ class TemplateItemController extends Controller
     public function getListAction(Template $template)
     {
         $items = $template->getItems();
+        $itemList = ListCollection::createGenericListFromArray(Item::class, $items->toArray());
 
         return new JsonResponse([
             'meta' => [
@@ -33,7 +35,7 @@ class TemplateItemController extends Controller
                 ],
                 'count' => $items->count(),
             ],
-            'items' => $items->toArray(),
+            'items' => $itemList->map('($i) => $i->toArray()')->toArray(),
         ]);
     }
 
@@ -71,9 +73,8 @@ class TemplateItemController extends Controller
     public function postItemAction(Request $request, Template $template)
     {
         $itemData = $request->request->get('item');
-        $itemData = json_decode($itemData);
 
-        if (!empty($item)) {
+        if (empty($itemData)) {
             return new JsonResponse(['error' => 'empty-item'], 400);
         }
 

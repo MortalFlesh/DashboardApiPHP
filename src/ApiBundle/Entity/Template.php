@@ -88,4 +88,15 @@ class Template
 
         $this->setItems($items);
     }
+
+    /**
+     * @return array
+     */
+    public function toArray()
+    {
+        return [
+            'id' => $this->getId(),
+            'name' => $this->getName(),
+        ];
+    }
 }

@@ -36,7 +36,7 @@ class Item
     private $top;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", name="`left`")
      * @var int
      */
     private $left;
@@ -199,5 +199,22 @@ class Item
     public function setTemplate(Template $template)
     {
         $this->template = $template;
+    }
+
+    /**
+     * @return array
+     */
+    public function toArray()
+    {
+        return [
+            'id' => $this->getId(),
+            'name' => $this->getName(),
+            'url' => $this->getUrl(),
+            'top' => $this->getTop(),
+            'left' => $this->getLeft(),
+            'height' => $this->getHeight(),
+            'width' => $this->getWidth(),
+            'refreshRate' => $this->getRefreshRate(),
+        ];
     }
 }

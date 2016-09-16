@@ -2,6 +2,7 @@
 
 namespace MF\Dashboard\ApiBundle\Controller;
 
+use MF\Collection\Mutable\Generic\ListCollection;
 use MF\Dashboard\ApiBundle\Entity\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -23,12 +24,13 @@ class TemplateController extends Controller
     public function getListAction()
     {
         $templates = $this->getDoctrine()->getRepository('ApiBundle:Template')->findAll();
+        $templateList = ListCollection::createGenericListFromArray(Template::class, $templates);
 
         return new JsonResponse([
             'meta' => [
-                'count' => count($templates),
+                'count' => $templateList->count(),
             ],
-            'templates' => $templates,
+            'templates' => $templateList->map('($t) => $t->toArray();')->toArray(),
         ]);
     }
 
@@ -60,7 +62,7 @@ class TemplateController extends Controller
     {
         $name = $request->request->get('name');
 
-        if (!empty($name)) {
+        if (empty($name)) {
             return new JsonResponse(['error' => 'empty-name'], 400);
         }
 
