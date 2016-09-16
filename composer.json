@@ -33,7 +33,10 @@
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::prepareDeploymentTarget"
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::prepareDeploymentTarget",
+            "bin/console doctrine:schema:update --dump-sql -f",
+            "#todo - bin/console doctrine:migration:migrate",
+            "bin/console cache:clear --env=prod"
         ],
         "post-install-cmd": [
             "@symfony-scripts"

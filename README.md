@@ -23,8 +23,8 @@ Api for Dashboard app
 |----------------------------------|--------|------------------|
 | /template/list/                  | GET    |                  |
 | /template/{id}/name/             | GET    |                  | 
-| /template/{id}/item/list/        | GET    |                  |
 | /template/                       | POST   | new tmp          |
-| /template/{id}/item/             | POST   | new tmp item     |
+| /template/{id}/item/list/        | GET    |                  |
 | /template/{id}/item/list/        | POST   | update tmp items |
+| /template/{id}/item/             | POST   | new tmp item     |
 | /template/{id}/item/{id}/delete/ | POST   |                  |
