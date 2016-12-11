@@ -78,7 +78,17 @@ class TemplateItemController extends Controller
             return new JsonResponse(['error' => 'empty-item'], 400);
         }
 
-        $item = new Item();
+        if (!empty($itemData['id'])) {
+            $item = $this->getDoctrine()->getRepository('ApiBundle:Item')->find($itemData['id']);
+
+            if (empty($item)) {
+                return new JsonResponse(['error' => 'item-not-found'], 404);
+            }
+        } else {
+            $item = new Item();
+            $template->addItem($item);
+        }
+
         $item->setName($itemData['name']);
         $item->setUrl($itemData['url']);
         $item->setTop($itemData['top']);
@@ -86,8 +96,6 @@ class TemplateItemController extends Controller
         $item->setHeight($itemData['height']);
         $item->setWidth($itemData['width']);
         $item->setRefreshRate($itemData['refreshRate']);
-
-        $template->addItem($item);
 
         $this->getDoctrine()->getRepository('ApiBundle:Template')->save($template);
 
