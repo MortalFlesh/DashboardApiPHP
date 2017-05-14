@@ -72,7 +72,12 @@ class TemplateItemController extends Controller
      */
     public function postItemAction(Request $request, Template $template)
     {
-        $itemData = $request->request->get('item');
+        $data = json_decode($request->getContent(), true);
+        if (empty($data['item'])) {
+            $itemData = $request->request->get('item');
+        } else {
+            $itemData = $data['item'];
+        }
 
         if (empty($itemData)) {
             return new JsonResponse(['error' => 'empty-item'], 400);
