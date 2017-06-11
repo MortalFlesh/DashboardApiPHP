@@ -60,7 +60,10 @@ class TemplateController extends Controller
      */
     public function postTemplateAction(Request $request)
     {
-        $name = $request->request->get('name');
+        $data = json_decode($request->getContent(), true);
+        $name = empty($data['name'])
+            ? $request->request->get('name')
+            : $data['name'];
 
         if (empty($name)) {
             return new JsonResponse(['error' => 'empty-name'], 400);
